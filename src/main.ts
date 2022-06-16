@@ -7,6 +7,8 @@ import store from "@/store/index"
 import { globalRegister } from "./global/index"
 import "element-plus/theme-chalk/index.css"
 
+import "./service/axios-demo"
+
 const app = createApp(App)
 
 globalRegister(app)
