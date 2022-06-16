@@ -1,5 +1,6 @@
 <template>
   <div>Login页面</div>
+  <h2>hello</h2>
 </template>
 
 <script lang="ts">
