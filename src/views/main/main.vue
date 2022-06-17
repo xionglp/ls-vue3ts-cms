@@ -8,6 +8,9 @@ import { defineComponent } from "vue"
 export default defineComponent({
   setup() {
     return {}
+  },
+  created() {
+    // console.log(process.env.VUE_APP_BASE_URL)
   }
 })
 </script>
