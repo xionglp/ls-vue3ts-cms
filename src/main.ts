@@ -17,3 +17,4 @@ app.use(ElementPlus)
 app.mount("#app")
 
 console.log(BASE_URL, TIME_OUT)
+console.log(process.env.VUE_APP_BASE_URL)
