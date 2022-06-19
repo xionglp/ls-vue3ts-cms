@@ -1,5 +1,6 @@
 import LSRequest from "./request"
 import { BASE_URL, TIME_OUT } from "./request/config"
+// import { AxiosRequestConfig } from "axios"
 
 const lsRequest = new LSRequest({
   baseURL: BASE_URL,

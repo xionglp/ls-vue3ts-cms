@@ -29,7 +29,26 @@ app.mount("#app")
 //   }
 // })
 
-lsRequest.request({
-  url: "/home/multidata",
-  method: "GET"
-})
+interface DataType {
+  data: any
+  returnCode: string
+  success: boolean
+}
+
+// lsRequest
+//   .request<DataType>({
+//     url: "/home/multidata",
+//     method: "GET"
+//   })
+//   .then((res) => {
+//     console.log("拿到的数据:", res)
+//     console.log(res.returnCode)
+//   })
+
+lsRequest
+  .get<DataType>({
+    url: "/home/multidata"
+  })
+  .then((res) => {
+    console.log("拿到的数据：", res.data)
+  })
