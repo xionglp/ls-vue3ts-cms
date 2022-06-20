@@ -1,9 +1,9 @@
-import { AxiosRequestConfig } from "axios"
+import { AxiosRequestConfig, AxiosResponse } from "axios"
 
 export interface LSRequestInterceptors {
   requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig
   requestInterceptorCatch?: (error: any) => any
-  responseInterceptor?: (res: AxiosRequestConfig) => AxiosRequestConfig
+  responseInterceptor?: (res: AxiosResponse) => AxiosResponse
   responseInterceptorCatch?: (error: any) => any
 }
 
