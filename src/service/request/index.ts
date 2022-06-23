@@ -22,8 +22,7 @@ class LSRequest {
     // 3. 添加所有实例的拦截器
     this.instance.interceptors.request.use(
       (configs) => {
-        console.log("所有实例都有的拦截器：请求成功拦截")
-
+        // console.log("所有实例都有的拦截器：请求成功拦截")
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -31,21 +30,17 @@ class LSRequest {
             background: "rgba(0, 0, 0, 0.5)"
           })
         }
-
         return configs
       },
       (error) => {
-        console.log("所有实例都有的拦截器：请求失败拦截")
         return error
       }
     )
 
     this.instance.interceptors.response.use(
       (res) => {
-        console.log("所有实例都有的拦截器：响应成功拦截")
-
+        // console.log("所有实例都有的拦截器：响应成功拦截")
         this.loading?.close()
-
         if (res.data.returnCode === "-1001") {
           console.log("请求失败，错误信息")
         } else {
@@ -53,8 +48,6 @@ class LSRequest {
         }
       },
       (error) => {
-        console.log("所有实例都有的拦截器：响应失败拦截")
-
         this.loading?.close()
         if (error.response.statue === 404) {
           console.log("404错误----")
@@ -87,7 +80,6 @@ class LSRequest {
           this.showLoading = true
 
           // 3. 将结果通过resolve返回出去
-          console.log(res)
           resolve(res)
         },
         (err: any) => {

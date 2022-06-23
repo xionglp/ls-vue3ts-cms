@@ -10,7 +10,7 @@ import ElementPlus from "element-plus"
 import "element-plus/theme-chalk/index.css"
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 
-import lsRequest from "./service"
+// import lsRequest from "./service"
 
 const app = createApp(App)
 
@@ -38,26 +38,16 @@ app.mount("#app")
 //   }
 // })
 
-interface DataType {
-  data: any
-  returnCode: string
-  success: boolean
-}
+// interface DataType {
+//   data: any
+//   returnCode: string
+//   success: boolean
+// }
 
 // lsRequest
-//   .request<DataType>({
-//     url: "/home/multidata",
-//     method: "GET"
+//   .get<DataType>({
+//     url: "/home/multidata"
 //   })
 //   .then((res) => {
-//     console.log("拿到的数据:", res)
-//     console.log(res.returnCode)
+//     console.log("拿到的数据：", res.data)
 //   })
-
-lsRequest
-  .get<DataType>({
-    url: "/home/multidata"
-  })
-  .then((res) => {
-    console.log("拿到的数据：", res.data)
-  })

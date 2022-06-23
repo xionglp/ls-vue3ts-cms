@@ -1,6 +1,8 @@
 import { Module } from "vuex"
 import { IRootState } from "../types"
 import { ILoginState } from "./login-types"
+import { IAccount } from "@/service/login/types"
+import { accountLoginRequest } from "@/service/login/login"
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -14,9 +16,10 @@ const loginModule: Module<ILoginState, IRootState> = {
   getters: {},
   mutations: {},
   actions: {
-    accountLoginAction({ commit }, payload) {
-      console.log("实现登录逻辑", commit)
-      console.log(payload)
+    async accountLoginAction({ commit }, payload: IAccount) {
+      console.log(commit)
+      const loginResult = await accountLoginRequest(payload)
+      console.log("登录结果", loginResult)
     }
   }
 }
