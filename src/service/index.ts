@@ -2,12 +2,18 @@ import LSRequest from "./request"
 import { BASE_URL, TIME_OUT } from "./request/config"
 // import { AxiosRequestConfig } from "axios"
 
+import localCache from "@/utils/local-cache"
+
 const lsRequest = new LSRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
-    requestInterceptor: (config) => {
+    requestInterceptor: (config: any) => {
       // console.log("单个实例：请求成功拦截---")
+      const token = localCache.getCache("token")
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
       return config
     },
     requestInterceptorCatch: (error) => {

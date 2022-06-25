@@ -4,12 +4,12 @@ import router from "@/router/index"
 import store from "@/store/index"
 import "normalize.css"
 import "./assets/css/index.less"
+import { setupStore } from "@/store/index"
 
 // 集成elementPlus
 import ElementPlus from "element-plus"
 import "element-plus/theme-chalk/index.css"
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
-
 // import lsRequest from "./service"
 
 const app = createApp(App)
@@ -21,6 +21,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(router)
 app.use(store)
 app.use(ElementPlus)
+
+setupStore()
 app.mount("#app")
 
 // lsRequest.request({
