@@ -38,7 +38,7 @@ export default defineComponent({
     align-items: center;
     cursor: pointer;
     span {
-      margin-left: 8px;
+      margin-left: 12px;
     }
   }
 }
