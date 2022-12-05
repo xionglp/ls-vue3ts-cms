@@ -27,13 +27,14 @@
             </template>
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item :index="subitem.id + ''" @click="handleMenuItemClick(subitem)">
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
           </el-sub-menu>
         </template>
+
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.id + ''">
@@ -49,6 +50,7 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue"
 import { useStore } from "@/store"
+import { useRouter } from "vue-router"
 
 export default defineComponent({
   props: {
@@ -59,12 +61,19 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
     const userMenus = computed(() => {
       return store.state.loginModule.userMenus
     })
+    const handleMenuItemClick = (item: any) => {
+      router.push({
+        path: item.url ?? "/not-found"
+      })
+    }
 
     return {
-      userMenus
+      userMenus,
+      handleMenuItemClick
     }
   }
 })
@@ -100,7 +109,7 @@ export default defineComponent({
   }
 
   // 目录
-  .el-submenu {
+  .el-sub-menu {
     background-color: #001529 !important;
     // 二级菜单 ( 默认背景 )
     .el-menu-item {
@@ -109,7 +118,7 @@ export default defineComponent({
     }
   }
 
-  ::v-deep .el-submenu__title {
+  ::v-deep .el-sub-menu__title {
     background-color: #001529 !important;
   }
 

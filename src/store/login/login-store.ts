@@ -29,10 +29,16 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-
-      console.log("注册动态路由")
+      // 动态加载路由
       const routes = mapMenusToRoutes(userMenus)
-      console.log(routes)
+      console.log("routes: ", routes)
+
+      // 将routes添加到main的children中
+      if (routes.length > 0) {
+        routes.forEach((route) => {
+          router.addRoute("main", route)
+        })
+      }
     }
   },
   actions: {
