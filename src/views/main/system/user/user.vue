@@ -1,16 +1,23 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <ls-form v-bind="searchFormConfig"></ls-form>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import LsForm from "@/base-ui/form/src/form.vue"
+import { searchFormConfig } from "./config/search.config"
 
 export default defineComponent({
   name: "user",
+  components: {
+    LsForm
+  },
   setup() {
-    return {}
+    return {
+      searchFormConfig
+    }
   }
 })
 </script>

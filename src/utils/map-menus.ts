@@ -17,8 +17,15 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const _recurseGetRoute = (menus: any[]) => {
     for (const item of menus) {
       if (item.type === 2) {
-        const route = allRoutes.find((route) => route.path === item.url)
-        if (route) routes.push(route)
+        const route = allRoutes.find((route) => {
+          if (route.path === "/main/system/menus") {
+            route.path = "/main/system/menu"
+          }
+          return route.path === item.url
+        })
+        if (route) {
+          routes.push(route)
+        }
       } else {
         _recurseGetRoute(item.children)
       }
