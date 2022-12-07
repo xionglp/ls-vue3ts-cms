@@ -1,4 +1,7 @@
 import { RouteRecordRaw } from "vue-router"
+import { IBreadcrumb } from "@/base-ui/breadcrumb"
+
+let firstMenu: any = null
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -9,9 +12,6 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
     const route = require("../router/main" + key.split(".")[1])
     allRoutes.push(route.default)
   })
-
-  // console.log("allRoutes: ", allRoutes)
-  // console.log("userMenus: ", userMenus)
 
   // 2. 根据后台返回的菜单数据，获取需要添加的routes
   const _recurseGetRoute = (menus: any[]) => {
@@ -26,6 +26,9 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         if (route) {
           routes.push(route)
         }
+        if (!firstMenu) {
+          firstMenu = item
+        }
       } else {
         _recurseGetRoute(item.children)
       }
@@ -36,3 +39,34 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        return findMenu
+      }
+    } else if (menu.type === 2 && currentPath === menu.url) {
+      return menu
+    }
+  }
+}
+
+export function pathMapToBreadcrumbs(userMenus: any[], currentPath: string): any {
+  const breadcrumbs: IBreadcrumb[] = []
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        breadcrumbs.push({ name: menu.name })
+        breadcrumbs.push({ name: findMenu.name })
+      }
+    } else if (menu.type === 2 && currentPath === menu.url) {
+      return menu
+    }
+  }
+  return breadcrumbs
+}
+
+export { firstMenu }
