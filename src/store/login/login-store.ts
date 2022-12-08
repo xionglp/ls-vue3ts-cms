@@ -31,7 +31,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       state.userMenus = userMenus
       // 动态加载路由
       const routes = mapMenusToRoutes(userMenus)
-      console.log("routes: ", routes)
+      // console.log("routes: ", routes)
 
       // 将routes添加到main的children中
       if (routes.length > 0) {
