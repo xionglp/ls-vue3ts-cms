@@ -1,6 +1,7 @@
 import { createStore, Store, useStore as useVuexStore } from "vuex"
 import { IRootState, IStoreType } from "./types"
 import loginModule from "./login/login-store"
+import systemModule from "./main/system/system-store"
 
 const store = createStore<IRootState>({
   state() {
@@ -12,7 +13,8 @@ const store = createStore<IRootState>({
   getters: {},
   actions: {},
   modules: {
-    loginModule
+    loginModule,
+    system: systemModule
   }
 })
 

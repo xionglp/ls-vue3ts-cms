@@ -8,6 +8,7 @@
 import { defineComponent } from "vue"
 import { searchFormConfig } from "./config/search.config"
 import pageSearch from "@/components/page-search"
+import { useStore } from "vuex"
 
 export default defineComponent({
   name: "user",
@@ -15,6 +16,15 @@ export default defineComponent({
     pageSearch
   },
   setup() {
+    const store = useStore()
+    store.dispatch("system/getPageListAction", {
+      url: "/users/list",
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+
     return {
       searchFormConfig
     }

@@ -91,19 +91,19 @@ class LSRequest {
     })
   }
 
-  get<T>(config: LSRequestConfig): Promise<T> {
+  get<T = any>(config: LSRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "GET" })
   }
 
-  post<T>(config: LSRequestConfig): Promise<T> {
+  post<T = any>(config: LSRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "POST" })
   }
 
-  delete<T>(config: LSRequestConfig): Promise<T> {
+  delete<T = any>(config: LSRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "DELETE" })
   }
 
-  patch<T>(config: LSRequestConfig): Promise<T> {
+  patch<T = any>(config: LSRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "PATCH" })
   }
 }
