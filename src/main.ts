@@ -5,6 +5,7 @@ import store from "@/store/index"
 import "normalize.css"
 import "./assets/css/index.less"
 import { setupStore } from "@/store/index"
+import { globalRegister } from "./global"
 
 // 集成elementPlus
 import ElementPlus from "element-plus"
@@ -20,6 +21,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(store)
 app.use(ElementPlus)
+app.use(globalRegister)
 setupStore()
 app.use(router)
 
