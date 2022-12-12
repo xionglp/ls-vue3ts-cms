@@ -7,25 +7,53 @@ const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
   state() {
     return {
-      userList: [],
-      userCount: 0
+      usersList: [],
+      usersCount: 0,
+      roleList: [],
+      roleCount: 0
+    }
+  },
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`]
+      }
     }
   },
   mutations: {
-    changeUserlist(state, userList: any[]) {
-      state.userList = userList
+    changeUsersList(state, usersList: any[]) {
+      state.usersList = usersList
     },
-    changeUserCount(state, userCount: number) {
-      state.userCount = userCount
+    changeUsersCount(state, usersCount: number) {
+      state.usersCount = usersCount
+    },
+    changeRoleList(state, roleList: any[]) {
+      state.roleList = roleList
+    },
+    changeRoleCount(state, roleCount: number) {
+      state.roleCount = roleCount
     }
   },
   actions: {
     async getPageListAction({ commit }, payload) {
-      const pageResult = await getPageListData(payload.url, payload.queryInfo)
-      // console.log(pageResult)
+      // 1.获取page的url
+      const pageName = payload.pageName
+      const pageUrl = `/${pageName}/list`
+
+      const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       const { list, totalCount } = pageResult.data
-      commit("changeUserlist", list)
-      commit("changeUserCount", totalCount)
+      // console.log("数据: ", list)
+
+      switch (pageName) {
+        case "users":
+          commit("changeUsersList", list)
+          commit("changeUsersCount", totalCount)
+          break
+        case "role":
+          commit("changeRoleList", list)
+          commit("changeRoleCount", totalCount)
+          break
+      }
     }
   }
 }

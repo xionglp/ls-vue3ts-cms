@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="page-content">
     <ls-table
       :listData="dataList"
       :propList="contentTableConfig.propList"
@@ -21,10 +21,12 @@
         <el-button size="small" plain :type="scope.row.enable ? 'success' : 'danger'">{{ scope.row.enable ? "启用" : "禁用" }}</el-button>
       </template>
       <template #createAt="scope">
-        <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
+        <span>{{ scope.row.createAt }}</span>
+        <!-- <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong> -->
       </template>
       <template #updateAt="scope">
-        <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+        <span>{{ scope.row.updateAt }}</span>
+        <!-- <span>{{ $filters.formatTime(scope.row.updateAt) }}</span> -->
       </template>
       <template #handler>
         <div class="handle-btns">
@@ -57,31 +59,44 @@ export default defineComponent({
     contentTableConfig: {
       type: Object,
       required: true
+    },
+    pageName: {
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     const store = useStore()
     store.dispatch("systemModule/getPageListAction", {
-      url: "/users/list",
+      // url: "/users/list",
+      pageName: props.pageName,
       queryInfo: {
         offset: 0,
-        size: 20
+        size: 10
       }
     })
 
-    const dataList = computed(() => store.state.systemModule.userList)
-    const dataCount = computed(() => store.state.systemModule.userCount)
+    // const dataList = computed(() => store.state.systemModule.usersList)
+    // const dataCount = computed(() => store.state.systemModule.usersCount)
+    const dataList = computed(() => {
+      return store.getters[`systemModule/pageListData`](props.pageName)
+    })
 
     const selectionChange = (data: any) => {
       console.log("data:", data)
     }
     return {
       selectionChange,
-      dataList,
-      dataCount
+      dataList
+      // dataCount
     }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.page-content {
+  padding: 20px;
+  border-top: 20px solid #f0f2f5;
+}
+</style>

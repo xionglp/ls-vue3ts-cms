@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <page-search :searchFormConfig="searchFormConfig"></page-search>
-    <page-content :contentTableConfig="contentTableConfig"></page-content>
+    <page-content :contentTableConfig="contentTableConfig" pageName="users"></page-content>
   </div>
 </template>
 
@@ -29,11 +29,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.content {
-  padding: 20px;
-  border-top: 20px solid #f0f2f5;
-}
-
 :deep(.el-button.is-link) {
   color: #409eff;
 }
