@@ -14,7 +14,7 @@ const store = createStore<IRootState>({
   actions: {},
   modules: {
     loginModule,
-    system: systemModule
+    systemModule: systemModule
   }
 })
 
