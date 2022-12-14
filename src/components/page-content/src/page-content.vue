@@ -67,17 +67,21 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    store.dispatch("systemModule/getPageListAction", {
-      // url: "/users/list",
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
 
-    // const dataList = computed(() => store.state.systemModule.usersList)
-    // const dataCount = computed(() => store.state.systemModule.usersCount)
+    // 发动网络请求
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch("systemModule/getPageListAction", {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...queryInfo
+        }
+      })
+    }
+    getPageData()
+
+    // 从vuex中获取数据
     const dataList = computed(() => {
       return store.getters[`systemModule/pageListData`](props.pageName)
     })
@@ -87,8 +91,8 @@ export default defineComponent({
     }
     return {
       selectionChange,
-      dataList
-      // dataCount
+      dataList,
+      getPageData
     }
   }
 })

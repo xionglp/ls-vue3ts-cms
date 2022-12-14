@@ -6,11 +6,11 @@
       </template>
       <template #footer>
         <div class="handle-btns">
-          <el-button>
+          <el-button @click="handleResetClick">
             <el-icon class="el-icon--left"><Refresh /></el-icon>
             重置
           </el-button>
-          <el-button type="primary">
+          <el-button type="primary" @click="handleQueryClick">
             <el-icon class="el-icon--left"><Search /></el-icon>
             搜索
           </el-button>
@@ -34,17 +34,41 @@ export default defineComponent({
   components: {
     LsForm
   },
-  setup() {
-    const formData = ref({
-      id: "",
-      name: "",
-      password: "",
-      sport: "",
-      createTime: ""
-    })
+  emits: ["queryBtnClick", "resetBtnClick"],
+  setup(props, { emit }) {
+    // const formData = ref({
+    //   id: "",
+    //   name: "",
+    //   password: "",
+    //   sport: "",
+    //   createTime: ""
+    // })
+
+    // 双向绑定的属性应该由配置文件的field决定
+    // 1.formData中的属性动态获取
+    const formItems = props.searchFormConfig.formItems ?? []
+    const formOriginData: any = {}
+    for (const item of formItems) {
+      formOriginData[item.field] = ""
+    }
+    const formData = ref(formOriginData)
+
+    // 2.点击重置，formData置为空
+    const handleResetClick = () => {
+      formData.value = formOriginData
+      emit("resetBtnClick")
+    }
+
+    // 3.点击搜索
+    const handleQueryClick = () => {
+      console.log("-----")
+      emit("queryBtnClick", formData.value)
+    }
 
     return {
-      formData
+      formData,
+      handleResetClick,
+      handleQueryClick
     }
   }
 })
