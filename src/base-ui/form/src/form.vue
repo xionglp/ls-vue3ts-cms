@@ -26,7 +26,12 @@
                   :model-value="modelValue[`${item.field}`]"
                   @update:modelValue="handleValueChange($event, item.field)"
                 >
-                  <el-option v-for="option in item.options" :key="option.value" :value="option.value">{{ option.title }}</el-option>
+                  <el-option
+                    v-for="option in item.options"
+                    :key="option.value"
+                    :value="option.value"
+                    >{{ option.title }}</el-option
+                  >
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">

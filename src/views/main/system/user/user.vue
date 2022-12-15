@@ -1,7 +1,15 @@
 <template>
   <div class="user">
-    <page-search :searchFormConfig="searchFormConfig" @queryBtnClick="queryBtnClick" @resetBtnClick="resetBtnClick"></page-search>
-    <page-content ref="pageContentRef" :contentTableConfig="contentTableConfig" pageName="users"></page-content>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @queryBtnClick="queryBtnClick"
+      @resetBtnClick="resetBtnClick"
+    ></page-search>
+    <page-content
+      ref="pageContentRef"
+      :contentTableConfig="contentTableConfig"
+      pageName="users"
+    ></page-content>
   </div>
 </template>
 

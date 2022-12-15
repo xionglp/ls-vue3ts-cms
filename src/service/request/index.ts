@@ -16,8 +16,14 @@ class LSRequest {
     this.showLoading = config.showLoading ?? true
 
     // 2. 从config中取出的拦截器是对应的实例的拦截器
-    this.instance.interceptors.request.use(this.interceptors?.requestInterceptor, this.interceptors?.requestInterceptorCatch)
-    this.instance.interceptors.response.use(this.interceptors?.responseInterceptor, this.interceptors?.responseInterceptorCatch)
+    this.instance.interceptors.request.use(
+      this.interceptors?.requestInterceptor,
+      this.interceptors?.requestInterceptorCatch
+    )
+    this.instance.interceptors.response.use(
+      this.interceptors?.responseInterceptor,
+      this.interceptors?.responseInterceptorCatch
+    )
 
     // 3. 添加所有实例的拦截器
     this.instance.interceptors.request.use(

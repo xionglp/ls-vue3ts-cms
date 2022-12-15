@@ -9,8 +9,19 @@
       </slot>
     </div>
     <el-table :data="listData" style="width: 100%" border @selection-change="handleSelectionChange">
-      <el-table-column v-if="showSelectColumn" type="selection" width="60" align="center"></el-table-column>
-      <el-table-column v-if="showIndexColumn" type="index" label="序号" width="80" align="center"></el-table-column>
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        width="60"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        width="80"
+        align="center"
+      ></el-table-column>
       <template v-for="item in propList" :key="item.name">
         <el-table-column align="center" v-bind="item">
           <template #default="scope">

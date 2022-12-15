@@ -18,7 +18,12 @@
 
       <!-- 2. 列中的插槽 -->
       <template #status="scope">
-        <el-button size="small" plain :type="scope.row.enable ? 'success' : 'danger'">{{ scope.row.enable ? "启用" : "禁用" }}</el-button>
+        <el-button
+          size="small"
+          plain
+          :type="scope.row.enable ? 'success' : 'danger'"
+          >{{ scope.row.enable ? "启用" : "禁用" }}</el-button
+        >
       </template>
       <template #createAt="scope">
         <span>{{ scope.row.createAt }}</span>
