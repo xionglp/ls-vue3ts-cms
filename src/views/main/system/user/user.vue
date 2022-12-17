@@ -5,11 +5,13 @@
       @queryBtnClick="queryBtnClick"
       @resetBtnClick="resetBtnClick"
     ></page-search>
-    <page-content
-      ref="pageContentRef"
-      :contentTableConfig="contentTableConfig"
-      pageName="users"
-    ></page-content>
+    <page-content ref="pageContentRef" :contentTableConfig="contentTableConfig" pageName="users">
+      <template #status="scope">
+        <el-button size="small" plain :type="scope.row.enable ? 'success' : 'danger'">
+          {{ scope.row.enable ? "启用" : "禁用" }}
+        </el-button>
+      </template>
+    </page-content>
   </div>
 </template>
 

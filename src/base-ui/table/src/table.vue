@@ -23,7 +23,7 @@
         align="center"
       ></el-table-column>
       <template v-for="item in propList" :key="item.name">
-        <el-table-column align="center" v-bind="item">
+        <el-table-column align="center" v-bind="item" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="item.slotName" :row="scope.row">
               {{ scope.row[item.prop] }}
@@ -37,11 +37,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30, 40]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -62,6 +62,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      default: 0
+    },
     propList: {
       type: Array as any,
       required: true
@@ -73,9 +77,13 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 })
     }
   },
-  emits: ["selectionChange"],
+  emits: ["selectionChange", "update:page"],
   setup(props, { emit }) {
     const currentPage = 2
 
@@ -84,12 +92,14 @@ export default defineComponent({
       emit("selectionChange", value)
     }
 
-    const handleSizeChange = (value: any) => {
-      console.log(value)
+    const handleCurrentChange = (currentPage: number) => {
+      console.log(currentPage)
+      emit("update:page", { ...props.page, currentPage })
     }
 
-    const handleCurrentChange = (value: any) => {
-      console.log(value)
+    const handleSizeChange = (pageSize: any) => {
+      console.log(pageSize)
+      emit("update:page", { ...props.page, pageSize })
     }
     return {
       currentPage,
