@@ -14,7 +14,7 @@
     >
       <!-- 1. header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary">
+        <el-button type="primary" v-if="isCreate">
           <el-icon class="el-icon--left"><CirclePlus /></el-icon>
           新增
         </el-button>
@@ -31,11 +31,11 @@
       </template>
       <template #handler>
         <div class="handle-btns">
-          <el-button link>
+          <el-button link v-if="isUpdate">
             <el-icon class="el-icon--left"><EditPen /></el-icon>
             编辑
           </el-button>
-          <el-button link>
+          <el-button link v-if="isDelete">
             <el-icon class="el-icon--left"><Delete /></el-icon>
             删除
           </el-button>
@@ -57,6 +57,7 @@
 import { defineComponent, computed, ref, watch } from "vue"
 import LsTable from "@/base-ui/table"
 import { useStore } from "@/store"
+import { usePermission } from "@/hooks/use-permission"
 
 export default defineComponent({
   components: {
@@ -75,6 +76,12 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
+    // 0.获取操作的权限
+    const isCreate = usePermission(props.pageName, "create")
+    const isUpdate = usePermission(props.pageName, "update")
+    const isDelete = usePermission(props.pageName, "delete")
+    const isQuery = usePermission(props.pageName, "query")
+
     // 1.双向绑定pageInfo
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
     watch(pageInfo, () => {
@@ -83,6 +90,7 @@ export default defineComponent({
 
     // 2.发动网络请求
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch("systemModule/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
@@ -98,7 +106,6 @@ export default defineComponent({
     const dataList = computed(() => {
       return store.getters[`systemModule/pageListData`](props.pageName)
     })
-    console.log("dataList:", dataList)
     const dataCount = computed(() => {
       return store.getters[`systemModule/pageListCount`](props.pageName)
     })
@@ -122,7 +129,10 @@ export default defineComponent({
       getPageData,
       dataCount,
       pageInfo,
-      otherPropSlots
+      otherPropSlots,
+      isCreate,
+      isDelete,
+      isUpdate
     }
   }
 })
