@@ -29,13 +29,13 @@
         <span>{{ scope.row.updateAt }}</span>
         <!-- <span>{{ $filters.formatTime(scope.row.updateAt) }}</span> -->
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
           <el-button link v-if="isUpdate">
             <el-icon class="el-icon--left"><EditPen /></el-icon>
             编辑
           </el-button>
-          <el-button link v-if="isDelete">
+          <el-button link v-if="isDelete" @click="handleDeleteClick(scope.row)">
             <el-icon class="el-icon--left"><Delete /></el-icon>
             删除
           </el-button>
@@ -83,7 +83,7 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, "query")
 
     // 1.双向绑定pageInfo
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => {
       getPageData()
     })
@@ -94,7 +94,7 @@ export default defineComponent({
       store.dispatch("systemModule/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -114,7 +114,7 @@ export default defineComponent({
       console.log("data:", data)
     }
 
-    // 4. 获取其他的动态插槽名
+    // 4.获取其他的动态插槽名
     const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => {
       // if (item.slotName === "status") return false
       if (item.slotName === "createAt") return false
@@ -122,6 +122,15 @@ export default defineComponent({
       if (item.slotName === "handler") return false
       return true
     })
+
+    // 5.删除/编辑/新增操作
+    const handleDeleteClick = (item: any) => {
+      console.log(item.id)
+      store.dispatch("systemModule/deletePageDataAction", {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
 
     return {
       selectionChange,
@@ -132,7 +141,8 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isDelete,
-      isUpdate
+      isUpdate,
+      handleDeleteClick
     }
   }
 })
