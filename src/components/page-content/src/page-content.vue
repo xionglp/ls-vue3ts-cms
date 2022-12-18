@@ -6,6 +6,8 @@
       :propList="contentTableConfig.propList"
       :showIndexColumn="contentTableConfig.showIndexColumn"
       :showSelectColumn="contentTableConfig.showSelectColumn"
+      :childrenProps="contentTableConfig.childrenProps"
+      :showFooter="contentTableConfig.showFooter"
       :title="contentTableConfig.title"
       v-model:page="pageInfo"
       @selectionChange="selectionChange"
@@ -96,6 +98,7 @@ export default defineComponent({
     const dataList = computed(() => {
       return store.getters[`systemModule/pageListData`](props.pageName)
     })
+    console.log("dataList:", dataList)
     const dataCount = computed(() => {
       return store.getters[`systemModule/pageListCount`](props.pageName)
     })
