@@ -14,7 +14,7 @@
     >
       <!-- 1. header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary" v-if="isCreate">
+        <el-button type="primary" v-if="isCreate" @click="handleNewClick">
           <el-icon class="el-icon--left"><CirclePlus /></el-icon>
           新增
         </el-button>
@@ -31,7 +31,7 @@
       </template>
       <template #handler="scope">
         <div class="handle-btns">
-          <el-button link v-if="isUpdate">
+          <el-button link v-if="isUpdate" @click="handleEditClick(scope.row)">
             <el-icon class="el-icon--left"><EditPen /></el-icon>
             编辑
           </el-button>
@@ -73,7 +73,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ["newBtnClick", "editBtnClick"],
+  setup(props, { emit }) {
     const store = useStore()
 
     // 0.获取操作的权限
@@ -132,6 +133,14 @@ export default defineComponent({
       })
     }
 
+    const handleNewClick = () => {
+      emit("newBtnClick")
+    }
+
+    const handleEditClick = (item: any) => {
+      emit("editBtnClick", item)
+    }
+
     return {
       selectionChange,
       dataList,
@@ -142,7 +151,9 @@ export default defineComponent({
       isCreate,
       isDelete,
       isUpdate,
-      handleDeleteClick
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
     }
   }
 })
